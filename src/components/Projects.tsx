@@ -1,150 +1,112 @@
 import React from "react";
-import Link from "next/link";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import Image from "next/image";
+import { FaGithub } from "react-icons/fa6";
+
+const projectPreviews = [
+  {
+    src: "/pine-dashboard-concept.png",
+    alt: "Pine dashboard concept with recent notes and notebooks",
+    width: 2040,
+    height: 1218,
+  },
+  {
+    src: "/pine-dashboard.png",
+    alt: "Pine live journaling dashboard",
+    width: 3840,
+    height: 2208,
+  },
+] as const;
 
 export default function Projects() {
-  const projects = [
-    {
-      slug: "janus",
-      number: "01",
-      tag: "BACKEND / INFRA",
-      tagColor: "bg-primary text-on-primary",
-      title: "Janus",
-      desc: "Distributed admission control and rate-limiting service for multi-tenant systems. Evaluates token-bucket quotas, fair queuing, and downstream health probes.",
-      metricLabel: "KEY METRIC",
-      metricValue: "~40% reduction in cluster overload incidents & sub-millisecond hot path.",
-      metricColor: "text-primary",
-      tech: ["Go", "Redis", "Lua", "PostgreSQL", "Docker"],
-      detailUrl: "/projects/janus",
-      githubUrl: "https://github.com",
-    },
-    {
-      slug: "pine",
-      number: "02",
-      tag: "AI / FULL-STACK",
-      tagColor: "bg-purple-accent text-on-surface",
-      title: "Pine",
-      desc: "AI-assisted journaling platform that treats personal writing as a private knowledge base. Features semantic search, grounded reflections, and client-side encryption.",
-      metricLabel: "KEY ARCHITECTURE",
-      metricValue: "Vector embeddings with scoped private retrieval over AWS Bedrock.",
-      metricColor: "text-purple-700",
-      tech: ["Go", "React", "Bedrock", "Redis", "PostgreSQL"],
-      detailUrl: "/projects/pine",
-      githubUrl: "https://github.com",
-    },
-    {
-      slug: "nexus",
-      number: "03",
-      tag: "SYSTEMS / NETWORKING",
-      tagColor: "bg-lime text-on-surface",
-      title: "Nexus",
-      desc: "Lightweight service mesh control plane. Provides dynamic canary routing, circuit breaking, and OpenTelemetry instrumentation without heavyweight operational baggage.",
-      metricLabel: "HIGHLIGHT",
-      metricValue: "Pure Envoy xDS dynamic control plane written in Go with gRPC.",
-      metricColor: "text-green-700",
-      tech: ["Go", "Envoy", "gRPC", "OTel", "Kubernetes"],
-      detailUrl: "/projects/nexus",
-      githubUrl: "https://github.com",
-    },
-    {
-      slug: "tracekit",
-      number: "04",
-      tag: "OBSERVABILITY",
-      tagColor: "bg-cream border-[2px] border-on-surface text-on-surface",
-      title: "Tracekit",
-      desc: "Zero-overhead structured logging and correlation ID propagation library for Go microservices, seamlessly bridging slog and OpenTelemetry spans.",
-      metricLabel: "PERFORMANCE",
-      metricValue: "Zero allocations on critical hot logging paths with context injection.",
-      metricColor: "text-on-surface",
-      tech: ["Go", "slog", "OpenTelemetry", "Docker"],
-      githubUrl: "https://github.com",
-    },
-  ];
-
   return (
-    <section id="projects" className="p-8 md:p-16 border-b-[3px] border-on-surface graph-paper">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex items-center gap-4 mb-8">
-          <span className="bg-lime text-on-surface font-code-md text-xs sm:text-sm font-bold px-4 py-1 border-[2px] border-on-surface brutalist-shadow-sm uppercase">
-            02 // PROJECTS
-          </span>
-          <h2 className="font-headline-lg text-3xl md:text-5xl font-black uppercase tracking-tight text-on-surface">
-            Selected Works
+    <section id="projects" className="section-shell">
+      <div className="section-inner">
+        <div className="mb-6">
+          <h2 className="font-headline-xl text-3xl font-semibold leading-tight text-on-surface sm:text-4xl">
+            Projects
           </h2>
+          <div aria-hidden="true" className="mt-3 h-px w-10 bg-on-surface" />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {projects.map((proj) => (
-            <article
-              key={proj.slug}
-              className="bg-white border-[3px] border-on-surface p-6 sm:p-8 brutalist-shadow flex flex-col justify-between relative group hover:-translate-y-1 transition-transform"
+        <div>
+          <div role="tablist" aria-label="Projects" className="flex gap-1 overflow-x-auto border-b border-on-surface/10">
+            <button
+              id="project-tab-pine"
+              type="button"
+              role="tab"
+              aria-selected="true"
+              aria-controls="project-panel-pine"
+              className="shrink-0 rounded-t-lg border-b-2 border-primary bg-surface-container px-5 py-3 text-sm font-semibold text-primary sm:text-base"
             >
+              Pine
+            </button>
+          </div>
+
+          <article id="project-panel-pine" role="tabpanel" aria-labelledby="project-tab-pine" className="pt-6">
+            <div className="flex items-start gap-4">
+              <Image src="/pine.png" alt="Pine logo" width={48} height={48} className="h-12 w-12 shrink-0 rounded-xl object-cover" />
               <div>
-                <div className="flex justify-between items-start mb-4">
-                  <span className={`font-code-md text-xs font-bold px-3 py-1 border-[2px] border-on-surface uppercase ${proj.tagColor}`}>
-                    {proj.tag}
-                  </span>
-                  <span className="font-code-md text-xs font-bold text-on-surface/60">
-                    {proj.number}
-                  </span>
-                </div>
-                <h3 className="font-headline-md text-2xl sm:text-3xl font-black uppercase mb-3 text-on-surface">
-                  {proj.title}
-                </h3>
-                <p className="text-on-surface/80 text-sm sm:text-base mb-6 leading-relaxed">
-                  {proj.desc}
+                <h3 className="font-headline-md text-2xl font-semibold text-on-surface">Pine</h3>
+                <p className="mt-1 max-w-2xl text-base leading-7 text-on-surface/84">
+                  An AI-powered journaling app for reflection, mood tracking, semantic search, and useful weekly recaps.
                 </p>
-                <div className="bg-cream border-[2px] border-on-surface p-3 mb-6 font-code-md text-xs font-bold">
-                  <span className={`${proj.metricColor} block mb-1 font-bold`}>{proj.metricLabel}:</span>
-                  <span>{proj.metricValue}</span>
-                </div>
               </div>
+            </div>
 
-              <div>
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {proj.tech.map((t) => (
-                    <span
-                      key={t}
-                      className="bg-cream border-[2px] border-on-surface px-2.5 py-1 font-code-md text-xs font-bold"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
+            <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-on-surface/8 pt-4">
+              <a
+                href="https://pine.brink.co.in"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-1.5 text-sm font-medium text-on-surface/72 underline decoration-on-surface/25 underline-offset-4 transition-colors hover:text-primary"
+              >
+                Try now
+                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
+              <a
+                href="https://github.com/satyamraj1643/pine"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-1.5 text-sm font-medium text-on-surface/72 underline decoration-on-surface/25 underline-offset-4 transition-colors hover:text-primary"
+              >
+                Frontend code <FaGithub className="h-4 w-4 text-[#181717]" />
+              </a>
+              <a
+                href="https://github.com/satyamraj1643/pine_backend_v2"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-1.5 text-sm font-medium text-on-surface/72 underline decoration-on-surface/25 underline-offset-4 transition-colors hover:text-primary"
+              >
+                Backend code <FaGithub className="h-4 w-4 text-[#181717]" />
+              </a>
+            </div>
 
-                <div className="flex gap-4">
-                  {proj.detailUrl ? (
-                    <>
-                      <Link
-                        href={proj.detailUrl}
-                        className="flex-grow bg-on-surface text-cream hover:bg-primary font-code-md text-sm font-bold py-3 text-center border-[2px] border-on-surface transition-colors flex items-center justify-center gap-2"
-                      >
-                        CASE STUDY <ArrowRight className="w-4 h-4" />
-                      </Link>
-                      <a
-                        href={proj.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`${proj.title} on GitHub`}
-                        className="bg-cream hover:bg-lime text-on-surface font-code-md text-sm font-bold px-4 py-3 border-[2px] border-on-surface transition-colors flex items-center justify-center"
-                      >
-                        GH
-                      </a>
-                    </>
-                  ) : (
-                    <a
-                      href={proj.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-grow bg-on-surface text-cream hover:bg-primary font-code-md text-sm font-bold py-3 text-center border-[2px] border-on-surface transition-colors flex items-center justify-center gap-2"
-                    >
-                      SOURCE REPOSITORY <ArrowUpRight className="w-4 h-4" />
-                    </a>
-                  )}
-                </div>
-              </div>
-            </article>
-          ))}
+            <div className="mt-4 flex max-w-[23rem] gap-3" aria-label="Pine screenshots">
+              {projectPreviews.map((preview) => (
+                <a
+                  key={preview.src}
+                  href="https://pine.brink.co.in"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Open Pine"
+                  className="group relative min-w-0 flex-1 overflow-hidden rounded-lg border border-on-surface/10 bg-[#f8f5ee] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-primary"
+                >
+                  <Image
+                    src={preview.src}
+                    alt={preview.alt}
+                    width={preview.width}
+                    height={preview.height}
+                    sizes="176px"
+                    className="aspect-video h-auto w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                  />
+                  <span className="absolute right-2 top-2 grid h-7 w-7 place-items-center rounded-full border border-on-surface/10 bg-white/95 text-on-surface shadow-sm transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
+                    <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                  </span>
+                </a>
+              ))}
+            </div>
+          </article>
         </div>
       </div>
     </section>
